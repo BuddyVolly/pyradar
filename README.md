@@ -1,10 +1,16 @@
 #pyradar
 
-[![logo](https://raw.github.com/PyRadar/pyradar/master/stuff/logos/logo1.png)](#logo)
+PyRadar fork GIT repository.
 
-PyRadar official GIT repository.
 
-# Contact Information
+## Installing GDAL for Python3
+
+To not get numpy messed by obsolete version from repo, you can just install gdal
+
+    apt-get download python3-gdal
+    dpkg --force-all -i <name of the .deb files you downloaded>
+
+## Contact Information
 
 Mail the authors!
   *  Herranz, Matías <matiasherranz@gmail.com>
@@ -12,6 +18,8 @@ Mail the authors!
 
 Or the colaborator!
   *  Cabral, Juan B. <jbc.develop@gmail.com>
+
+
 
 ### The docs are in readthedocs.org
 

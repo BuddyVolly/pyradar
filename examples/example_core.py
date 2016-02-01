@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from pyradar.core.sar import create_dataset_from_path
 from pyradar.core.sar import get_band_from_dataset
 from pyradar.core.sar import get_geoinfo

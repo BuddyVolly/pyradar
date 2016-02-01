@@ -24,7 +24,7 @@
 import os
 from datetime import datetime
 
-import Image
+from PIL import Image
 import numpy as np
 
 from osgeo import gdal
