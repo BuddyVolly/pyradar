@@ -29,27 +29,28 @@ def naive_eq(image):
     show_image(image_eq, 'Naive equalization')
 
 
-def filters_eq(image):
-    from pyradar.filters.frost import frost_filter
-    from pyradar.filters.kuan import kuan_filter
-    from pyradar.filters.lee import lee_filter
-    from pyradar.filters.lee_enhanced import lee_enhanced_filter
+def filters_eq(image, use_acceleration=True):
+    if not use_acceleration:
+        from pyradar.filters.frost import frost_filter
+        from pyradar.filters.kuan import kuan_filter
+        from pyradar.filters.lee import lee_filter
+        from pyradar.filters.lee_enhanced import lee_enhanced_filter
+        from pyradar.filters.mean import mean_filter
+    else:
+        from pyradar.filters.accelerated.frost import frost_filter
+        from pyradar.filters.accelerated.kuan import kuan_filter
+        from pyradar.filters.accelerated.lee import lee_filter
+        from pyradar.filters.accelerated.lee_enhanced import lee_enhanced_filter
+        from pyradar.filters.accelerated.mean import mean_filter
     from pyradar.filters.median import median_filter
-    from pyradar.filters.mean import mean_filter
-
     # filters parameters
-    # window size
-    winsize = 15
-    # damping factor for frost
-    k_value1 = 2.0
-    # damping factor for lee enhanced
-    k_value2 = 1.0
-    # coefficient of variation of noise
-    cu_value = 0.25
-    # coefficient of variation for lee enhanced of noise
-    cu_lee_enhanced = 0.523
-    # max coefficient of variation for lee enhanced
-    cmax_value = 1.73
+
+    winsize = 15 # window size
+    k_value1 = 2.0 # damping factor for frost
+    k_value2 = 1.0 # damping factor for lee enhanced
+    cu_value = 0.25 # coefficient of variation of noise
+    cu_lee_enhanced = 0.523 # coefficient of variation for lee enhanced of noise
+    cmax_value = 1.73 # max coefficient of variation for lee enhanced
 
     # frost filter
     tic('Frost')
@@ -67,7 +68,8 @@ def filters_eq(image):
 
     toc()
 
-    show_image([(image, 'original'), (image_frost, 'Frost'), (image_kuan, 'Kuan'), (image_lee, 'Lee') , (image_lee_enhanced, 'lee_e')])
+    show_image([(image, 'original'), (image_frost, 'Frost'), (image_kuan, 'Kuan'), (image_lee, 'Lee'),
+                (image_lee_enhanced, 'lee_e')])
 
     # kuan filter
     # tic('Kuan')
@@ -100,13 +102,15 @@ def iso(image):
     class_image_eq = equalization_using_histogram(class_image)
     show_image(class_image_eq, 'isodata_classification')
 
+
 def dud(image):
     show_image(image, 'isodata_classification')
+
 
 def kmeans(image):
     from pyradar.classifiers.kmeans import kmeans_classification
     # number of clusters
-    k= 4
+    k = 4
     # max number of iterations
     iter_max = 1000
     # run K-Means
@@ -140,8 +144,8 @@ if __name__ == '__main__':
     keys = SAMPLES
     i = np.array(image).astype('float64')
     filters_eq(i)
-    while(True):
-        print('\n'.join(['%s). %s'%(id, k[0]) for id, k in enumerate(keys)]))
+    while (True):
+        print('\n'.join(['%s). %s' % (id, k[0]) for id, k in enumerate(keys)]))
         print('-------------- \n')
         q = input('Select demo ID: ')
         keys[int(q)][1](image)

@@ -25,8 +25,6 @@ import numpy as np
 from numba import float64, int16
 from numba import jit
 
-from .utils import assert_window_size
-from .utils import assert_indices_in_range
 
 @jit(float64[:, :](float64[:, :], int16), cache=True, nopython=True)
 def mean_filter(img, win_size=3):

@@ -3,10 +3,12 @@
 PyRadar fork GIT repository.
 Filters are NUMBA-powered; So, new requirement is NUMBA
 
-|      Filter           |      No NUMBA       |      NUMBA          |
-|-----------------------|---------------------|---------------------|
-| Kuan on 256x256 patch |        5.4s         |       0.05s         |
-| Frost on 256x256 patch|        ~8s          |       0.50s         |
+|          Filter              |      No NUMBA       |      NUMBA          |
+|------------------------------|---------------------|---------------------|
+| Frost on 256x256 patch       |      9.72s          |       0.51s         |
+| Kuan on 256x256 patch        |      5.38s          |       0.05s         |
+| Lee on 256x256 patch         |      5.47s          |       0.05s         |
+| LeeEnchanced on 256x256 patch|      5.46s          |       0.12s         |
 
 
 
@@ -28,7 +30,6 @@ Or the colaborator!
 
 Or the guy, who rewritten filters using NUMBA!
   *  Nanopony <sddeath@gmail.com>
-
 
 
 ### The docs are in readthedocs.org

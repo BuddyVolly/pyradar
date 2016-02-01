@@ -22,6 +22,7 @@
 from numba import jit
 
 
+@jit(cache=True)
 def assert_window_size(win_size):
     """
     Asserts invalid window size.
@@ -35,6 +36,7 @@ def assert_window_size(win_size):
     return True
 
 
+@jit(cache=True)
 def assert_indices_in_range(width, height, xleft, xright, yup, ydown):
     """
     Asserts index out of image range.

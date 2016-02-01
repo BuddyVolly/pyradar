@@ -26,9 +26,6 @@ from numba import float64, int16
 from numba import jit
 from scipy.stats import variation
 
-from .utils import assert_window_size
-from .utils import assert_indices_in_range
-
 COEF_VAR_DEFAULT = 0.01
 
 
