@@ -52,13 +52,16 @@ def filters_eq(image):
     cmax_value = 1.73
 
     # frost filter
-    # image_frost = jit(frost_filter)(image, damping_factor=k_value1, win_size=winsize)
-    # show_image(image_frost, 'Frost')
-    # kuan filter
-    tic('Kuan')
-    image_kuan = kuan_filter(image, win_size=winsize, cu=cu_value)
+    tic('Frost')
+    image_frost = frost_filter(image, damping_factor=k_value1, win_size=winsize)
     toc()
-    show_image([(image, 'original'), (image_kuan, 'Kuan') ])
+    show_image([(image, 'original'), (image_frost, 'Kuan') ])
+
+    # kuan filter
+    # tic('Kuan')
+    # image_kuan = kuan_filter(image, win_size=winsize, cu=cu_value)
+    # toc()
+    # show_image([(image, 'original'), (image_kuan, 'Kuan') ])
 
     exit()
     # # lee filter

@@ -59,7 +59,7 @@ def weighting(window, cu=CU_DEFAULT):
     return w_t
 
 
-@jit(float64[:,:](float64[:,:], int16, float64), cache=True, nopython= True)
+@jit(float64[:, :](float64[:, :], int16, float64), cache=True, nopython=True)
 def kuan_filter(img, win_size=3, cu=CU_DEFAULT):
     """
     Apply kuan to a numpy matrix containing the image, with a window of

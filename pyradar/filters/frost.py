@@ -22,6 +22,8 @@
 
 
 import numpy as np
+from numba import float64, int16
+from numba import jit
 from scipy.stats import variation
 
 from .utils import assert_window_size
@@ -51,7 +53,7 @@ def compute_coef_var(image, x_start, x_end, y_start, y_end):
 
     if not coef_var:  # dirty patch
         coef_var = COEF_VAR_DEFAULT
-#        print "squared_coef was equal zero but replaced by %s" % coef_var
+    # print "squared_coef was equal zero but replaced by %s" % coef_var
     assert coef_var > 0, 'ERROR: coeffient of variation cannot be zero.'
 
     return coef_var
@@ -84,6 +86,7 @@ def calculate_local_weight_matrix(window, factor_A):
     return weights_array
 
 
+@jit(float64[:, :](float64[:, :], float64, int16), cache=True, nopython=True)
 def frost_filter(img, damping_factor=2.0, win_size=3):
     """
     Apply frost filter to a numpy matrix containing the image, with a window of
@@ -91,7 +94,9 @@ def frost_filter(img, damping_factor=2.0, win_size=3):
     By default, the window size is 3x3.
     """
 
-    assert_window_size(win_size)
+    # assert_window_size(win_size)
+
+    # weights_array = np.zeros((win_size, win_size))
 
     img_filtered = np.zeros_like(img)
     N, M = img.shape
@@ -112,19 +117,21 @@ def frost_filter(img, damping_factor=2.0, win_size=3):
             if ydown >= M:
                 ydown = M - 1
 
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
-
+            # assert_indices_in_range(N, M, xleft, xright, yup, ydown)
             # inspired by http://www.pcigeomatics.com/cgi-bin/pcihlp/FFROST
-            variation_coef = compute_coef_var(img, xleft, xright, yup, ydown)
             window = img[xleft:xright, yup:ydown]
             window_mean = window.mean()
-            sigma_zero = variation_coef / window_mean  # var / u^2
+            window_std = window.mean()
+
+            coef_var = window_std / window_mean
+            if not coef_var:  # dirty patch
+                coef_var = COEF_VAR_DEFAULT
+
+            sigma_zero = coef_var / window_mean  # var / u^2
             factor_A = damping_factor * sigma_zero
-
-            weights_array = calculate_local_weight_matrix(window, factor_A)
-            pixels_array = window.flatten()
-
-            weighted_values = weights_array * pixels_array
+            center_pixel = np.float64(window[int(win_size / 2), int(win_size / 2)])
+            weights_array = np.exp(-np.abs(factor_A*(window - center_pixel)))
+            weighted_values = weights_array * window
             img_filtered[i, j] = weighted_values.sum() / weights_array.sum()
 
     return img_filtered

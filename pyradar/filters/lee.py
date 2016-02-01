@@ -85,7 +85,7 @@ def lee_filter(img, win_size=3, cu=CU_DEFAULT):
 
             if yup < 0:
                 yup = 0
-            if ydown >= M:
+            if ydown >= M:Kuan
                 ydown = M
 
             assert_indices_in_range(N, M, xleft, xright, yup, ydown)

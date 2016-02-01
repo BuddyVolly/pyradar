@@ -6,6 +6,7 @@ Filters are NUMBA-powered; So, new requirement is NUMBA
 |      Filter           |      No NUMBA       |      NUMBA          |
 |-----------------------|---------------------|---------------------|
 | Kuan on 256x256 patch |        5.4s         |       0.05s         |
+| Frost on 256x256 patch|        ~8s          |       0.50s         |
 
 
 
