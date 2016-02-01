@@ -71,8 +71,8 @@ def print_info(info):
     time_now = time.time()
     time_now_human = time.ctime(time_now)
 
-    print "\nTime now: ", time_now
-    print "Time now(for humans)", time_now_human
+    print("\nTime now: ", time_now)
+    print("Time now(for humans)", time_now_human)
 
     pp = pprint.PrettyPrinter(depth=4)
     pp.pprint(info)

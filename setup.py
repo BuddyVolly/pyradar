@@ -49,7 +49,7 @@ import pyradar
 #===============================================================================
 
 PYPI_REQUIRE = [
-    "PIL",
+    "pillow",
     "numpy",
     "matplotlib",
     "scipy"
@@ -72,7 +72,7 @@ SUGESTED = {
 
 def validate_modules(requires):
     not_found = []
-    for name, url in requires.items():
+    for name, url in list(requires.items()):
         try:
             __import__(name)
         except ImportError:
@@ -81,10 +81,10 @@ def validate_modules(requires):
     return not_found
 
 def print_not_found(not_found, msg):
-    limits = "=" * max(map(len, not_found))
-    print "\n{}\n{}\n{}\n{}\n".format(msg, limits,
+    limits = "=" * max(list(map(len, not_found)))
+    print("\n{}\n{}\n{}\n{}\n".format(msg, limits,
                                         "\n".join(not_found),
-                                        limits)
+                                        limits))
 
 not_found = validate_modules(MANUAL_REQUIRE)
 if not_found:

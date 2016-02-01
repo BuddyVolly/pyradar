@@ -44,10 +44,10 @@ def load_images(filename1=None, filename2=None):
                 img1 = list(img1_obj.getdata())
                 img2 = list(img2_obj.getdata())
             except IOError:
-                print "ERROR:Can't open '%s'\n" % filename2
+                print("ERROR:Can't open '%s'\n" % filename2)
                 img2 = None
         except IOError:
-            print "ERROR:Can't open '%s'\n" % filename1
+            print("ERROR:Can't open '%s'\n" % filename1)
             img1 = None
     else:
         try:
@@ -58,32 +58,32 @@ def load_images(filename1=None, filename2=None):
                 img1 = list(img1_obj.getdata())
                 img2 = list(img2_obj.getdata())
             except IOError:
-                print "ERROR:Can't open '%s'\n" % FILENAME2
+                print("ERROR:Can't open '%s'\n" % FILENAME2)
                 img2 = None
         except IOError:
-            print "ERROR:Can't open '%s'\n" % FILENAME1
+            print("ERROR:Can't open '%s'\n" % FILENAME1)
             img1 = None
 
     return img1, img2
 
 
 if __name__ == "__main__":
-    print "#" * 79
-    print "Comparing files..."
+    print("#" * 79)
+    print("Comparing files...")
 
     if len(argv) == 3:
         filename1 = argv[1]
         filename2 = argv[2]
-        print "Using filenames '%s', '%s'" % (filename1, filename2)
+        print("Using filenames '%s', '%s'" % (filename1, filename2))
         img1, img2 = load_images(filename1, filename2)
 
     elif len(argv) == 2:
-        print "Using defaults filenames '%s', '%s'" % (FILENAME1, FILENAME2)
+        print("Using defaults filenames '%s', '%s'" % (FILENAME1, FILENAME2))
         img1, img2 = load_images()
 
     if img1 and img2 and (img1 == img2):
-        print "The images are the same."
+        print("The images are the same.")
     elif img1 and img2:
-        print "The images are differents."
+        print("The images are differents.")
     else:
         pass

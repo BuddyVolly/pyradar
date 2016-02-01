@@ -26,7 +26,7 @@ import numpy as np
 
 from scipy import optimize
 
-from comparator_utils import RMSE, MAE, Pearson
+from .comparator_utils import RMSE, MAE, Pearson
 
 
 class SimilarityMatrix(object):
@@ -194,10 +194,10 @@ class ImageComparator(BaseImageComparator):
                 'pearson': self.calculate_pearson,
                 }
 
-        if strategy not in functions_dict.keys():
+        if strategy not in list(functions_dict.keys()):
             raise ComparatorException("Strategy not available. "
                             "Available strategies are: %s" %
-                            (", ".join(functions_dict.keys())), )
+                            (", ".join(list(functions_dict.keys()))), )
 
         f = functions_dict[strategy]
         if params:
@@ -214,7 +214,7 @@ if __name__ == '__main__':
 
     im = ImageComparator(numpy_image, numpy_image1)
 
-    print 'rmse1: ', im.compare_by('rmse1', None)
-    print 'rmse2: ', im.compare_by('rmse2', None)
-    print 'mae: ', im.compare_by('mae', None)
-    print 'pearson: ', im.compare_by('pearson', None)
+    print('rmse1: ', im.compare_by('rmse1', None))
+    print('rmse2: ', im.compare_by('rmse2', None))
+    print('mae: ', im.compare_by('mae', None))
+    print('pearson: ', im.compare_by('pearson', None))

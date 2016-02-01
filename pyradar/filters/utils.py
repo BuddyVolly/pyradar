@@ -29,8 +29,8 @@ def assert_window_size(win_size):
     assert win_size >= 3, 'ERROR: win size must be at least 3'
 
     if win_size % 2 == 0:
-        print 'It is highly recommended to user odd window sizes.'\
-              'You provided %s, an even number.' % (win_size, )
+        print('It is highly recommended to user odd window sizes.'\
+              'You provided %s, an even number.' % (win_size, ))
 
 
 def assert_indices_in_range(width, height, xleft, xright, yup, ydown):

@@ -67,8 +67,8 @@ class Timer(object):
             secs = secs % 60
 
         if print_value:
-            print "Run took: %s mins, %s secs, %s microsecs." \
-                                                % (mins, secs, microsecs)
+            print("Run took: %s mins, %s secs, %s microsecs." \
+                                                % (mins, secs, microsecs))
 
         time_diff = {'full_diff': diff,
                      'mins': mins,

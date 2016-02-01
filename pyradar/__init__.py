@@ -34,7 +34,7 @@ STR_VERSION = ".".join(VERSION)
 
 SHORT_DESCRIPTION = __doc__.splitlines()[0]
 
-AUTHOR = u"Matías Herranz <matiasherranz@gmail.com> - Joaquín Tita <joaquintita@gmail.com>"
+AUTHOR = "Matías Herranz <matiasherranz@gmail.com> - Joaquín Tita <joaquintita@gmail.com>"
 
 EMAIL = "matiasherranz@gmail.com - joaquintita@gmail.com"
 
@@ -42,7 +42,7 @@ URL = "https://github.com/PyRadar/pyradar"
 
 LICENSE = "LGPL 3"
 
-FULL_LICENSE = u"""This library is free software; you can redistribute it and/or
+FULL_LICENSE = """This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either
 version 3 of the License, or (at your option) any later version.
@@ -61,7 +61,7 @@ KEYWORDS = "radar satellite image sar lee kuan lee-enhanced"
 
 
 CLASSIFIERS = (
-    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 3",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Topic :: Multimedia :: Graphics",

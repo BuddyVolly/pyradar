@@ -58,7 +58,7 @@ def update_centers(img_flat, img_class, centers):
     """
     axis = 0
     n_clusters = centers.shape[0]
-    for cluster in xrange(n_clusters):
+    for cluster in range(n_clusters):
         condition = np.equal(img_class, cluster)
         members = np.compress(condition, img_flat, axis)
         if members.shape[0] > 0:
@@ -95,7 +95,7 @@ def kmeans_classification(img, k=K_CLASSES, iter_max=ITER_MAX):
 
     centers = initial_clusters(img_flat, k, "linspace")
 
-    for iter in xrange(0, iter_max):
+    for iter in range(0, iter_max):
         img_class, distances = vq(img_flat, centers)
 
         last_centers = centers.copy()
@@ -104,7 +104,7 @@ def kmeans_classification(img, k=K_CLASSES, iter_max=ITER_MAX):
         if converged_clusters(centers, last_centers, iter):
             break
 
-    print "Kmeans(info): Used %s classes." % k
-    print "Kmeans(info): Number of Iterations done: %s." % (iter + 1)
+    print("Kmeans(info): Used %s classes." % k)
+    print("Kmeans(info): Number of Iterations done: %s." % (iter + 1))
 
     return img_class.reshape(N, M)

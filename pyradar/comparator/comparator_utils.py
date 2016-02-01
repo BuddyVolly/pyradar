@@ -48,8 +48,8 @@ class Evaluation(object):
         # data is a list of tuples.
         # E.g: [(3, 2.3), (1, 0.9), (5, 4.9), (2, 0.9), (3, 1.5)]
         if data:
-            self._ground_truth, self._test = map(itemgetter(0), data), \
-                                             map(itemgetter(1), data)
+            self._ground_truth, self._test = list(map(itemgetter(0), data)), \
+                                             list(map(itemgetter(1), data))
         else:
             self._ground_truth = []
             self._test = []

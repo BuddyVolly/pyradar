@@ -160,4 +160,4 @@ def save_image(img_dest_dir, filename, img):
     img_obj.save(img_dest_path, extension)
     img_obj = None
 
-    print 'File saved to "' + img_dest_path + '".'
+    print('File saved to "' + img_dest_path + '".')

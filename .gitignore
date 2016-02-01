@@ -33,3 +33,4 @@ _test_images
 .settings
 doc/build
 doc/source/_temp
+*.bak

@@ -38,7 +38,7 @@ def get_fmt_string(format, count):
     formats = {'float': 'f', }  # we can add more types here. Read the docs.
 
     # Assert we know this format:
-    assert format in formats.keys(), 'ERROR: format unknown'
+    assert format in list(formats.keys()), 'ERROR: format unknown'
 
     # Assert 'count' is a positive integer:
     assert isinstance(count, int), 'ERROR: count is not an integer'
@@ -48,38 +48,38 @@ def get_fmt_string(format, count):
 
 
 dataset = gdal.Open(abs_path, gdalconst.GA_ReadOnly)
-print '\n'
+print('\n')
 
 #######Getting dataset information#############################################
-print 'Driver: ', dataset.GetDriver().ShortName, \
-        '/', dataset.GetDriver().LongName
-print 'Size is ', dataset.RasterXSize, 'x', dataset.RasterYSize,\
-        'x', dataset.RasterCount
-print 'Projection is ', dataset.GetProjection()
+print('Driver: ', dataset.GetDriver().ShortName, \
+        '/', dataset.GetDriver().LongName)
+print('Size is ', dataset.RasterXSize, 'x', dataset.RasterYSize,\
+        'x', dataset.RasterCount)
+print('Projection is ', dataset.GetProjection())
 
 geotransform = dataset.GetGeoTransform()
 if not geotransform is None:
-        print 'Origin = (', geotransform[0], ',', geotransform[3], ')'
-        print 'Pixel Size = (', geotransform[1], ',', geotransform[5], ')'
+        print('Origin = (', geotransform[0], ',', geotransform[3], ')')
+        print('Pixel Size = (', geotransform[1], ',', geotransform[5], ')')
 
 ######Fetching a Raster Band###################################################
-print '\n'
+print('\n')
 
 band = dataset.GetRasterBand(1)
-print 'Band Type', gdal.GetDataTypeName(band.DataType)
+print('Band Type', gdal.GetDataTypeName(band.DataType))
 min = band.GetMinimum()
 max = band.GetMaximum()
 
 if min is None or max is None:
     (min, max) = band.ComputeRasterMinMax(1)
-print 'Min=%.3f Max=%.3f' % (min, max)
+print('Min=%.3f Max=%.3f' % (min, max))
 
 if band.GetOverviewCount() > 0:
-    print 'Band has ', band.GetOverviewCount(), ' overviews.'
+    print('Band has ', band.GetOverviewCount(), ' overviews.')
 
 if not band.GetRasterColorTable() is None:
-    print 'Band has a color table with ', \
-                            band.GetRasterColorTable().GetCount(), 'entries.'
+    print('Band has a color table with ', \
+                            band.GetRasterColorTable().GetCount(), 'entries.')
 
 #######Reading Raster Data#####################################################
 

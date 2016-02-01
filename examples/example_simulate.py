@@ -39,7 +39,7 @@ k_ims.export_image_layer(layer_name='noisy_image', filename='k_noisy_img',
 timer.calculate_time_elapsed(print_value=True)
 
 # Make a plot:
-print 'Making a plot to "plot_img.png":'
+print('Making a plot to "plot_img.png":')
 pylab.close()
 gamma_ims.plot_layer_histogram(layer_name='image_layer', filename='plot_gamma_img')
 k_ims.plot_layer_histogram(layer_name='image_layer', filename='plot_k_img')

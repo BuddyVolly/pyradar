@@ -163,7 +163,7 @@ class ImageSimulator(object):
 
         if self.image_layer is None and \
            self.noise_layer is None:
-            msg = u'Image layer and noise layer are both unset.'
+            msg = 'Image layer and noise layer are both unset.'
             raise self.SimulatorException(msg)
         else:
             self.noisy_image = (self.image_layer * self.noise_layer)
@@ -253,7 +253,7 @@ if __name__ == '__main__':
     timer.calculate_time_elapsed(print_value=True)
 
     # Make a plot:
-    print 'Making a plot to "plot_img.png":'
+    print('Making a plot to "plot_img.png":')
     pylab.close()
     gamma_ims.plot_layer_histogram(layer_name='image_layer',
                                    filename='plot_gamma_img')

@@ -32,7 +32,7 @@ def compute_cfs(histogram):
     partial_sum = 0
 
     start, stop, step = 0, histogram.size, 1
-    for i in xrange(start, stop, step):
+    for i in range(start, stop, step):
         partial_sum += histogram[i]
         cfs[i] = partial_sum
 
@@ -74,7 +74,7 @@ def calculate_cdf_for_pixel(image, histogram, bin_edge, value):
     if bin_edge.max() < value:
         return float(1)
 
-    for i in xrange(start, stop, step):
+    for i in range(start, stop, step):
         acum += calculate_pdf_for_pixel(image, histogram, bin_edge, i)
         if acum == float(1):
             break
@@ -97,7 +97,7 @@ def compute_cdfs(image, histogram, bin_edge):
     min_value = image.min()
     start, stop, step = min_value, max_value + 1, 1
 
-    for i in xrange(start, stop, step):
+    for i in range(start, stop, step):
         local_pdf = calculate_pdf_for_pixel(image, histogram, bin_edge, i)
         index = i - min_value
         if i == start:

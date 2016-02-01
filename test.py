@@ -76,8 +76,8 @@ with open(TEMP_DIR_DISCLAIMER, "w") as fp:
 
 if not os.path.exists(IMAGES):
     import sys
-    print "Extracting files to zips, It's only the first time"
-    print "please wait..."
+    print("Extracting files to zips, It's only the first time")
+    print("please wait...")
     for dname, _, fnames in os.walk(TEST_ZIPS):
         for fname in fnames:
             fpath = os.path.join(dname, fname)
@@ -94,7 +94,7 @@ class TestAll(unittest.TestCase):
     def test_all(self):
         image_path = os.path.join(IMAGES,  "DAT_01.001")
 
-        print image_path
+        print(image_path)
 
         dataset = create_dataset_from_path(image_path)
         band = get_band_from_dataset(dataset)
@@ -170,7 +170,7 @@ class TestAll(unittest.TestCase):
         image_original = equalization_using_histogram(image)
         save_image(IMG_DEST_DIR, "image_original", image_original)
 
-        print "\a\a\a"
+        print("\a\a\a")
 
 
 #===============================================================================

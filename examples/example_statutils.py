@@ -13,7 +13,7 @@ max_value = arr.max()
 min_value = arr.min()
 start, stop, step = int(min_value), int(max_value + 2), 1
 
-histogram, bin_edge = np.histogram(arr, xrange(start, stop, step))
+histogram, bin_edge = np.histogram(arr, range(start, stop, step))
 compute_cfs(histogram)
 
 # >>> array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,

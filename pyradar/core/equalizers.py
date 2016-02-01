@@ -63,7 +63,7 @@ def equalization_using_histogram(img):
 
     start, stop, step = int(min_value), int(max_value + 2), 1
 
-    histogram, bin_edge = np.histogram(img, xrange(start, stop, step))
+    histogram, bin_edge = np.histogram(img, range(start, stop, step))
     cfs = histogram.cumsum()  # cumulative frencuency table
     img_corrected = equalize_histogram(img, histogram, cfs)
 

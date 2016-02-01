@@ -106,7 +106,7 @@ def merge_clusters(img_class_flat, centers, clusters_list):
         to_add = np.array([])  # new clusters to add
         to_delete = np.array([])  # clusters to delete
 
-        for cluster in xrange(0, k):
+        for cluster in range(0, k):
             result = np.where(img_class_flat == clusters_list[cluster])
             indices = result[0]
             count_per_cluster[cluster] = indices.size
@@ -133,7 +133,7 @@ def merge_clusters(img_class_flat, centers, clusters_list):
         end = to_add.size + start
 
         centers = np.append(centers, to_add)
-        clusters_list = np.append(clusters_list, xrange(start, end))
+        clusters_list = np.append(clusters_list, range(start, end))
 
         centers, clusters_list = sort_arrays_by_first(centers, clusters_list)
 
@@ -157,8 +157,8 @@ def compute_pairwise_distances(centers):
     pair_dists = []
     size = centers.size
 
-    for i in xrange(0, size):
-        for j in xrange(0, size):
+    for i in range(0, size):
+        for j in range(0, size):
             if i > j:
                 d = np.abs(centers[i] - centers[j])
                 pair_dists.append((d, (i, j)))
@@ -185,7 +185,7 @@ def split_clusters(img_flat, img_class_flat, centers, clusters_list):
                                  clusters_list)
 
     # compute all the standard deviation of the clusters
-    for cluster in xrange(0, k):
+    for cluster in range(0, k):
         indices = np.where(img_class_flat == clusters_list[cluster])[0]
         count_per_cluster[cluster] = indices.size
         value = ((img_flat[indices] - centers[cluster]) ** 2).sum()
@@ -230,7 +230,7 @@ def compute_overall_distance(img_class_flat, avg_dists_to_clusters,
     total = img_class_flat.size
     count_per_cluster = np.zeros(k)
 
-    for cluster in xrange(0, k):
+    for cluster in range(0, k):
         indices = np.where(img_class_flat == clusters_list[cluster])[0]
         count_per_cluster[cluster] = indices.size
 
@@ -246,7 +246,7 @@ def compute_avg_distance(img_flat, img_class_flat, centers, clusters_list):
     k = centers.size
     avg_dists_to_clusters = np.array([])
 
-    for cluster in xrange(0, k):
+    for cluster in range(0, k):
         indices = np.where(img_class_flat == clusters_list[cluster])[0]
 
         total_per_cluster = indices.size + 1
@@ -269,7 +269,7 @@ def discard_clusters(img_class_flat, centers, clusters_list):
     assert centers.size == clusters_list.size, \
         "ERROR: discard_cluster() centers and clusters_list size are different"
 
-    for cluster in xrange(0, k):
+    for cluster in range(0, k):
         indices = np.where(img_class_flat == clusters_list[cluster])[0]
         total_per_cluster = indices.size
         if total_per_cluster <= THETA_M:
@@ -307,7 +307,7 @@ def update_clusters(img_flat, img_class_flat, centers, clusters_list):
     assert centers.size == clusters_list.size, \
         "ERROR: update_clusters() centers and clusters_list size are different"
 
-    for cluster in xrange(0, k):
+    for cluster in range(0, k):
         indices = np.where(img_class_flat == clusters_list[cluster])[0]
         #get whole cluster
         cluster_values = img_flat[indices]
@@ -402,10 +402,10 @@ def isodata_classification(img, parameters=None):
     img_flat = img.flatten()
     clusters_list = np.arange(k)  # number of clusters availables
 
-    print "Isodata(info): Starting algorithm with %s classes" % k
+    print("Isodata(info): Starting algorithm with %s classes" % k)
     centers = initial_clusters(img_flat, k, "linspace")
 
-    for iter in xrange(0, I):
+    for iter in range(0, I):
 #        print "Isodata(info): Iteration:%s Num Clusters:%s" % (iter, k)
         last_centers = centers.copy()
         # assing each of the samples to the closest cluster center
@@ -435,7 +435,7 @@ def isodata_classification(img, parameters=None):
 
 #        take_snapshot(img_class_flat.reshape(N, M), iteration_step=iter)
 ###############################################################################
-    print "Isodata(info): Finished with %s classes" % k
-    print "Isodata(info): Number of Iterations: %s" % (iter + 1)
+    print("Isodata(info): Finished with %s classes" % k)
+    print("Isodata(info): Number of Iterations: %s" % (iter + 1))
 
     return img_class_flat.reshape(N, M)

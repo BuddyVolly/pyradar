@@ -23,8 +23,8 @@
 
 import numpy as np
 
-from utils import assert_window_size
-from utils import assert_indices_in_range
+from .utils import assert_window_size
+from .utils import assert_indices_in_range
 
 COEF_VAR_DEFAULT = 0.01
 CU_DEFAULT = 0.25
@@ -69,7 +69,7 @@ def lee_filter(img, win_size=3, cu=CU_DEFAULT):
     N, M = img.shape
     win_offset = win_size / 2
 
-    for i in xrange(0, N):
+    for i in range(0, N):
         xleft = i - win_offset
         xright = i + win_offset
 
@@ -78,7 +78,7 @@ def lee_filter(img, win_size=3, cu=CU_DEFAULT):
         if xright >= N:
             xright = N
 
-        for j in xrange(0, M):
+        for j in range(0, M):
             yup = j - win_offset
             ydown = j + win_offset
 

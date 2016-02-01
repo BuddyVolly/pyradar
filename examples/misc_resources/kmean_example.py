@@ -58,8 +58,8 @@ sample3[:, 0] -= 0.5
 
 sets = np.concatenate((sample1, sample2, sample3))
 
-sets = np.array(range(0,9))
-print sets
+sets = np.array(list(range(0,9)))
+print(sets)
 ###############################################################################
 # kmeans for K_CLASSES clusters
 #centroids, idx = kmeans2(np.array(zip(sets[:, 0], sets[:, 1])), K_CLASSES)
