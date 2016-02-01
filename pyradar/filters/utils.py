@@ -19,8 +19,10 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library. If not, see <http://www.gnu.org/licenses/>.
+from numba import jit
 
 
+@jit(cache=True)
 def assert_window_size(win_size):
     """
     Asserts invalid window size.
@@ -29,10 +31,12 @@ def assert_window_size(win_size):
     assert win_size >= 3, 'ERROR: win size must be at least 3'
 
     if win_size % 2 == 0:
-        print('It is highly recommended to user odd window sizes.'\
-              'You provided %s, an even number.' % (win_size, ))
+        print('It is highly recommended to user odd window sizes.' \
+              'You provided %s, an even number.' % (win_size,))
+    return True
 
 
+@jit(cache=True)
 def assert_indices_in_range(width, height, xleft, xright, yup, ydown):
     """
     Asserts index out of image range.
@@ -48,3 +52,4 @@ def assert_indices_in_range(width, height, xleft, xright, yup, ydown):
 
     assert ydown >= 0 and ydown <= height, \
         "index ydown:%s out of range. (%s<= ydown < %s)" % (ydown, 0, height)
+    return True

@@ -22,6 +22,7 @@
 
 
 import numpy as np
+from numba import jit
 
 from .utils import assert_window_size
 from .utils import assert_indices_in_range
@@ -55,7 +56,7 @@ def weighting(window, cu=CU_DEFAULT):
 
     return w_t
 
-
+@jit
 def lee_filter(img, win_size=3, cu=CU_DEFAULT):
     """
     Apply lee to a numpy matrix containing the image, with a window of
@@ -64,7 +65,7 @@ def lee_filter(img, win_size=3, cu=CU_DEFAULT):
     assert_window_size(win_size)
 
     # we process the entire img as float64 to avoid type overflow error
-    img = np.float64(img)
+    img = img.astype('float64')
     img_filtered = np.zeros_like(img)
     N, M = img.shape
     win_offset = win_size / 2

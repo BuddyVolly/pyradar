@@ -1,6 +1,12 @@
 #pyradar
 
 PyRadar fork GIT repository.
+Filters are NUMBA-powered; So, new requirement is NUMBA
+
+|      Filter           |      No NUMBA       |      NUMBA          |
+|-----------------------|---------------------|---------------------|
+| Kuan on 256x256 patch |        5.4s         |       0.05s         |
+
 
 
 ## Installing GDAL for Python3
@@ -18,6 +24,8 @@ Mail the authors!
 
 Or the colaborator!
   *  Cabral, Juan B. <jbc.develop@gmail.com>
+
+Or the guy, who rewritten filters using NUMBA
 
 
 

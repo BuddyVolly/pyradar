@@ -3,7 +3,7 @@
 
 from pyradar.simulate.image_simulator import ImageSimulator
 from pyradar.utils.timeutils import Timer
-import pylab
+import p
 pylab.close()
 
 timer = Timer()

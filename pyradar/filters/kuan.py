@@ -22,6 +22,7 @@
 
 
 import numpy as np
+from numba import jit, float64, int16
 from scipy.stats import variation
 
 from .utils import assert_window_size
@@ -31,6 +32,7 @@ COEF_VAR_DEFAULT = 0.01
 CU_DEFAULT = 0.25
 
 
+# @jit(cache=True, nopython= True)
 def weighting(window, cu=CU_DEFAULT):
     """
     Computes the weighthing function for Kuan filter using cu as the noise
@@ -57,17 +59,21 @@ def weighting(window, cu=CU_DEFAULT):
     return w_t
 
 
+@jit(float64[:,:](float64[:,:], int16, float64), cache=True, nopython= True)
 def kuan_filter(img, win_size=3, cu=CU_DEFAULT):
     """
     Apply kuan to a numpy matrix containing the image, with a window of
     win_size x win_size.
     """
 
-    assert_window_size(win_size)
+    # assert_window_size(win_size)
 
     # we process the entire img as float64 to avoid type overflow error
-    img = np.float64(img)
     img_filtered = np.zeros_like(img)
+    two_cu = cu * cu
+    divisor = 1.0 + two_cu
+    if not divisor:
+        divisor = 0.0001
 
     N, M = img.shape
     win_offset = win_size / 2
@@ -84,18 +90,25 @@ def kuan_filter(img, win_size=3, cu=CU_DEFAULT):
         for j in range(0, M):
             yup = j - win_offset
             ydown = j + win_offset
-
             if yup < 0:
                 yup = 0
             if ydown >= M:
                 ydown = M
-
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
-
             pix_value = img[i, j]
             window = img[xleft:xright, yup:ydown]
-            w_t = weighting(window, cu)
             window_mean = window.mean()
+            window_std = window.std()
+            ci = window_std / window_mean
+            two_ci = ci * ci
+
+            if two_ci == 0:  # dirty patch to avoid zero division
+                two_ci = COEF_VAR_DEFAULT
+
+            if cu > ci:
+                w_t = 0.0
+            else:
+                w_t = (1.0 - (two_cu / two_ci)) / divisor
+
             new_pix_value = (pix_value * w_t) + (window_mean * (1.0 - w_t))
 
             img_filtered[i, j] = round(new_pix_value)
