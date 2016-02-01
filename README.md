@@ -26,7 +26,8 @@ Mail the authors!
 Or the colaborator!
   *  Cabral, Juan B. <jbc.develop@gmail.com>
 
-Or the guy, who rewritten filters using NUMBA
+Or the guy, who rewritten filters using NUMBA!
+  *  Nanopony <sddeath@gmail.com>
 
 
 

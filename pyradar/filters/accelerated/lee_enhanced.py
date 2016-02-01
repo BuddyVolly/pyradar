@@ -24,6 +24,8 @@
 from math import exp
 
 import numpy as np
+from numba import float64
+from numba import jit, int16
 
 from .utils import assert_window_size
 from .utils import assert_indices_in_range
@@ -84,9 +86,15 @@ def lee_enhanced_filter(img, win_size=3, k=K_DEFAULT, cu=CU_DEFAULT,
     """
     assert_window_size(win_size)
     assert_parameters(k, cu, cmax)
+    return _lee_enhanced_filter(img.astype('float64'), win_size, k, cu,
+                                cmax)
 
+
+@jit(float64[:, :](float64[:, :], int16, float64, float64, float64), cache=True, nopython=True)
+def _lee_enhanced_filter(img, win_size=3, k=K_DEFAULT, cu=CU_DEFAULT,
+                         cmax=CMAX_DEFAULT):
     # we process the entire img as float64 to avoid type overflow error
-    img = np.float64(img)
+
     img_filtered = np.zeros_like(img)
     N, M = img.shape
     win_offset = win_size / 2
@@ -109,18 +117,26 @@ def lee_enhanced_filter(img, win_size=3, k=K_DEFAULT, cu=CU_DEFAULT,
             if ydown >= M:
                 ydown = M
 
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
+            # assert_indices_in_range(N, M, xleft, xright, yup, ydown)
 
             pix_value = img[i, j]
             window = img[xleft:xright, yup:ydown]
-            w_t = weighting(pix_value, window, k, cu, cmax)
             window_mean = window.mean()
+            window_std = window.std()
+            ci = window_std / window_mean
+
+            if ci <= cu:  # use the mean value
+                w_t = 1.0
+            elif cu < ci < cmax:  # use the filter
+                w_t = exp((-k * (ci - cu)) / (cmax - ci))
+            elif ci >= cmax:  # preserve the original value
+                w_t = 0.0
 
             new_pix_value = (window_mean * w_t) + (pix_value * (1.0 - w_t))
 
             assert new_pix_value >= 0.0, \
-                    "ERROR: lee_enhanced_filter(), pix " \
-                    "filter can't be negative"
+                "ERROR: lee_enhanced_filter(), pix " \
+                "filter can't be negative"
 
             img_filtered[i, j] = round(new_pix_value)
 

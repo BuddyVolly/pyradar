@@ -22,11 +22,13 @@
 
 
 import numpy as np
+from numba import float64, int16
+from numba import jit
 
 from .utils import assert_window_size
 from .utils import assert_indices_in_range
 
-
+@jit(float64[:, :](float64[:, :], int16), cache=True, nopython=True)
 def mean_filter(img, win_size=3):
     """
     Apply a 'mean filter' to 'img' with a window size equal to 'win_size'.
@@ -34,7 +36,7 @@ def mean_filter(img, win_size=3):
         - img: a numpy matrix representing the image.
         - win_size: the size of the windows (by default 3).
     """
-    assert_window_size(win_size)
+    # assert_window_size(win_size)
 
     N, M = img.shape
     win_offset = win_size / 2
@@ -58,7 +60,7 @@ def mean_filter(img, win_size=3):
             if ydown >= M:
                 ydown = M
 
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
+            # assert_indices_in_range(N, M, xleft, xright, yup, ydown)
 
             window = img[xleft:xright, yup:ydown]
             window_mean = window.mean()

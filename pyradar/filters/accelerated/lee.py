@@ -22,7 +22,7 @@
 
 
 import numpy as np
-from numba import jit
+from numba import jit, float64, int16
 
 from .utils import assert_window_size
 from .utils import assert_indices_in_range
@@ -56,16 +56,16 @@ def weighting(window, cu=CU_DEFAULT):
 
     return w_t
 
-@jit
+@jit(float64[:, :](float64[:, :], int16, float64), cache=True, nopython=True)
 def lee_filter(img, win_size=3, cu=CU_DEFAULT):
     """
     Apply lee to a numpy matrix containing the image, with a window of
     win_size x win_size.
     """
-    assert_window_size(win_size)
-
+    # assert_window_size(win_size)
     # we process the entire img as float64 to avoid type overflow error
-    img = img.astype('float64')
+    two_cu = cu * cu
+    # img = img.astype('float64')
     img_filtered = np.zeros_like(img)
     N, M = img.shape
     win_offset = win_size / 2
@@ -85,20 +85,26 @@ def lee_filter(img, win_size=3, cu=CU_DEFAULT):
 
             if yup < 0:
                 yup = 0
-            if ydown >= M:Kuan
+            if ydown >= M:
                 ydown = M
 
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
+            # assert_indices_in_range(N, M, xleft, xright, yup, ydown)
 
             pix_value = img[i, j]
             window = img[xleft:xright, yup:ydown]
-            w_t = weighting(window, cu)
             window_mean = window.mean()
+            window_std = window.std()
+            ci = window_std / window_mean
+            two_ci = ci * ci
+            if not two_ci:  # dirty patch to avoid zero division
+                two_ci = COEF_VAR_DEFAULT
+            if cu > ci:
+                w_t = 0.0
+            else:
+                w_t = 1.0 - (two_cu / two_ci)
+
             new_pix_value = (pix_value * w_t) + (window_mean * (1.0 - w_t))
 
-            assert new_pix_value >= 0.0, \
-                    "ERROR: lee_filter(), pixel filtered can't be negative"
-
-            img_filtered[i, j] = round(new_pix_value)
+            img_filtered[i, j] = np.round(new_pix_value)
 
     return img_filtered

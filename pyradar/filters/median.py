@@ -22,11 +22,12 @@
 
 
 import numpy as np
+from numba import float64, jit, int16
 
 from .utils import assert_window_size
 from .utils import assert_indices_in_range
 
-
+# @jit(float64[:, :](float64[:, :], int16), cache=True, nopython=True)
 def median_filter(img, win_size=3):
     """
     Apply a 'median filter' to 'img' with a window size equal to 'win_size'.
@@ -34,8 +35,6 @@ def median_filter(img, win_size=3):
         - img: a numpy matrix representing the image.
         - win_size: the size of the windows (by default 3)
     """
-
-    assert_window_size(win_size)
 
     N, M = img.shape
     win_offset = win_size / 2
@@ -59,11 +58,11 @@ def median_filter(img, win_size=3):
             if ydown >= M:
                 ydown = M
 
-            assert_indices_in_range(N, M, xleft, xright, yup, ydown)
+            # assert_indices_in_range(N, M, xleft, xright, yup, ydown)
 
             window = img[xleft:xright, yup:ydown]
-            window_median = np.median(window)
+            window_median = np.median(img)
 
-            img_filtered[i, j] = round(window_median)
+            img_filtered[i, j] = np.round(window_median)
 
     return img_filtered

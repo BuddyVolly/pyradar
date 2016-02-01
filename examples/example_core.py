@@ -55,33 +55,35 @@ def filters_eq(image):
     tic('Frost')
     image_frost = frost_filter(image, damping_factor=k_value1, win_size=winsize)
     toc()
-    show_image([(image, 'original'), (image_frost, 'Kuan') ])
-
-    # kuan filter
-    # tic('Kuan')
-    # image_kuan = kuan_filter(image, win_size=winsize, cu=cu_value)
-    # toc()
-    # show_image([(image, 'original'), (image_kuan, 'Kuan') ])
-
-    exit()
-    # # lee filter
+    tic('Kuan')
+    image_kuan = kuan_filter(image, win_size=winsize, cu=cu_value)
+    toc()
     tic('Lee')
     image_lee = lee_filter(image, win_size=winsize, cu=cu_value)
     toc()
-    show_image([(image, 'original'), (image_lee, 'Lee') ])
-    exit()
-    # lee enhanced filter
+    tic('Lee_ench')
     image_lee_enhanced = lee_enhanced_filter(image, win_size=winsize, k=k_value2,
                                              cu=cu_lee_enhanced, cmax=cmax_value)
+
+    toc()
+
+    show_image([(image, 'original'), (image_frost, 'Frost'), (image_kuan, 'Kuan'), (image_lee, 'Lee') , (image_lee_enhanced, 'lee_e')])
+
+    # kuan filter
+    # tic('Kuan')
+    # toc()
+    # show_image([(image, 'original'), (image_kuan, 'Kuan') ])
+
+    # exit()
+    # # lee filter
+
+    exit()
+    # lee enhanced filter
     show_image(image_lee_enhanced, 'Enchanced Lee')
 
-    # mean filter
-    image_mean = mean_filter(image, win_size=winsize)
-    show_image(image_mean, 'Mean')
-
-    # median filter
-    image_median = median_filter(image, win_size=winsize)
-    show_image(image_median, 'Median')
+    # tic('Median')
+    # image_median = median_filter(image, win_size=winsize)
+    # toc()
 
 
 def iso(image):
